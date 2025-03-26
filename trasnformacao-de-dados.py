@@ -5,13 +5,13 @@ import pandas as pd
 import os
 from zipfile import ZipFile
 
-# URL do PDF do Anexo I (substitua pelo link correto do PDF)
+
 pdf_url = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos/Anexo_I_Rol_2021RN_465.2021_RN627L.2024.pdf"
 pdf_path = "Anexo_I.pdf"
 csv_path = "Teste_Amanda.csv"
 zip_path = "Teste_Amanda.zip"
 
-# Função para baixar o PDF automaticamente
+# baixar o PDF
 def baixar_pdf(url, caminho):
     response = requests.get(url, stream=True)
     if response.status_code == 200:
@@ -22,7 +22,7 @@ def baixar_pdf(url, caminho):
         print("Erro ao baixar o PDF.")
         exit()
 
-# Função para extrair dados da tabela do PDF e salvar como CSV
+# extrair dados da tabela
 def extrair_dados_pdf(caminho_pdf, caminho_csv):
     try:
         tabelas = read_pdf(caminho_pdf, pages='all', multiple_tables=True, lattice=True)
@@ -48,14 +48,14 @@ def extrair_dados_pdf(caminho_pdf, caminho_csv):
         print(f"Erro ao processar o PDF: {e}")
         exit()
 
-# Função para compactar os arquivos em um ZIP
+# compactar os arquivos em um ZIP
 def compactar_em_zip(arquivos, caminho_zip):
     with ZipFile(caminho_zip, 'w') as zipf:
         for arquivo in arquivos:
             zipf.write(arquivo, os.path.basename(arquivo))
     print(f"Arquivos compactados em: {caminho_zip}")
 
-# Criar uma thread para baixar o PDF
+
 thread_download = threading.Thread(target=baixar_pdf, args=(pdf_url, pdf_path))
 thread_download.start()
 thread_download.join()  # Esperar o download terminar antes de continuar
