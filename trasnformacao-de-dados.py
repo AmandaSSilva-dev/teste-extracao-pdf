@@ -48,7 +48,7 @@ def extrair_dados_pdf(caminho_pdf, caminho_csv):
         print(f"Erro ao processar o PDF: {e}")
         exit()
 
-# compactar os arquivos em um ZIP
+
 def compactar_em_zip(arquivos, caminho_zip):
     with ZipFile(caminho_zip, 'w') as zipf:
         for arquivo in arquivos:
@@ -58,10 +58,10 @@ def compactar_em_zip(arquivos, caminho_zip):
 
 thread_download = threading.Thread(target=baixar_pdf, args=(pdf_url, pdf_path))
 thread_download.start()
-thread_download.join()  # Esperar o download terminar antes de continuar
+thread_download.join()
 
-# Processar o PDF e criar a tabela
+
 extrair_dados_pdf(pdf_path, csv_path)
 
-# Compactar os arquivos em ZIP
+
 compactar_em_zip([pdf_path, csv_path], zip_path)
